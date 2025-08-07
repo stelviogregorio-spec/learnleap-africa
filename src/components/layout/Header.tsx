@@ -1,17 +1,27 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, BookOpen, User, ShoppingCart, Search } from "lucide-react";
+import { Menu, X, BookOpen, User, ShoppingCart, Search, LogOut } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, signOut, loading } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-hero">
               <BookOpen className="h-5 w-5 text-white" />
             </div>
@@ -19,7 +29,7 @@ const Header = () => {
               <h1 className="text-xl font-bold text-foreground">EduFlow</h1>
               <p className="text-xs text-muted-foreground">Learn, Grow, Succeed</p>
             </div>
-          </div>
+          </Link>
 
           {/* Search Bar - Desktop */}
           <div className="hidden md:flex flex-1 max-w-md mx-8">
@@ -54,14 +64,39 @@ const Header = () => {
               <ShoppingCart className="h-4 w-4" />
             </Button>
             
-            <div className="hidden md:flex items-center space-x-2">
-              <Button variant="ghost" size="sm">
-                Log In
-              </Button>
-              <Button size="sm" className="bg-gradient-button shadow-button">
-                Sign Up
-              </Button>
-            </div>
+            {!loading && (
+              <>
+                {user ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm" className="hidden md:flex items-center gap-2">
+                        <Avatar className="h-6 w-6">
+                          <AvatarFallback className="text-xs">
+                            {user.email?.charAt(0).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <span className="text-sm">{user.email?.split('@')[0]}</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={signOut}>
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Sair
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <div className="hidden md:flex items-center space-x-2">
+                    <Button variant="ghost" size="sm" asChild>
+                      <Link to="/auth">Entrar</Link>
+                    </Button>
+                    <Button size="sm" className="bg-gradient-button shadow-button" asChild>
+                      <Link to="/auth">Cadastrar</Link>
+                    </Button>
+                  </div>
+                )}
+              </>
+            )}
 
             {/* Mobile menu button */}
             <Button
@@ -108,12 +143,29 @@ const Header = () => {
                   <ShoppingCart className="h-4 w-4 mr-2" />
                   Cart
                 </Button>
-                <Button variant="ghost" className="w-full justify-start">
-                  Log In
-                </Button>
-                <Button className="w-full bg-gradient-button">
-                  Sign Up
-                </Button>
+                {!loading && (
+                  <>
+                    {user ? (
+                      <Button 
+                        variant="ghost" 
+                        className="w-full justify-start" 
+                        onClick={signOut}
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Sair
+                      </Button>
+                    ) : (
+                      <>
+                        <Button variant="ghost" className="w-full justify-start" asChild>
+                          <Link to="/auth">Entrar</Link>
+                        </Button>
+                        <Button className="w-full bg-gradient-button" asChild>
+                          <Link to="/auth">Cadastrar</Link>
+                        </Button>
+                      </>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
