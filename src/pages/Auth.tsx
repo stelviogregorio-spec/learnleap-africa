@@ -81,14 +81,6 @@ export default function Auth() {
   const handleSignIn = async (data: SignInForm) => {
     setIsLoading(true);
     try {
-      cleanupAuthState();
-      
-      try {
-        await supabase.auth.signOut({ scope: 'global' });
-      } catch (err) {
-        // Continue even if this fails
-      }
-
       const { data: authData, error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
@@ -116,7 +108,7 @@ export default function Auth() {
           title: "Login realizado com sucesso!",
           description: "Redirecionando...",
         });
-        window.location.href = '/';
+        navigate('/');
       }
     } catch (error: any) {
       toast({
@@ -132,14 +124,6 @@ export default function Auth() {
   const handleSignUp = async (data: SignUpForm) => {
     setIsLoading(true);
     try {
-      cleanupAuthState();
-      
-      try {
-        await supabase.auth.signOut({ scope: 'global' });
-      } catch (err) {
-        // Continue even if this fails
-      }
-
       const redirectUrl = `${window.location.origin}/`;
 
       const { data: authData, error } = await supabase.auth.signUp({
