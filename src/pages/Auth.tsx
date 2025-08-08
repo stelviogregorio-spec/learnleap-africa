@@ -38,6 +38,7 @@ export default function Auth() {
 
   const signInForm = useForm<SignInForm>({
     resolver: zodResolver(signInSchema),
+    mode: "onChange",
     defaultValues: {
       email: "",
       password: "",
@@ -46,6 +47,7 @@ export default function Auth() {
 
   const signUpForm = useForm<SignUpForm>({
     resolver: zodResolver(signUpSchema),
+    mode: "onChange",
     defaultValues: {
       email: "",
       password: "",
@@ -218,6 +220,7 @@ export default function Auth() {
                               placeholder="Seu nome completo"
                               className="pl-10"
                               disabled={isLoading}
+                              autoComplete="name"
                             />
                           </div>
                         </FormControl>
@@ -241,6 +244,7 @@ export default function Auth() {
                               placeholder="seu@email.com"
                               className="pl-10"
                               disabled={isLoading}
+                              autoComplete="email"
                             />
                           </div>
                         </FormControl>
@@ -329,6 +333,7 @@ export default function Auth() {
                               placeholder="seu@email.com"
                               className="pl-10"
                               disabled={isLoading}
+                              autoComplete="email"
                             />
                           </div>
                         </FormControl>
