@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, BookOpen, User, ShoppingCart, Search, LogOut } from "lucide-react";
+import { Menu, X, BookOpen, User, ShoppingCart, Search, LogOut, Shield } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +15,32 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { user, signOut, loading } = useAuth();
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      if (!user) {
+        setIsAdmin(false);
+        return;
+      }
+
+      try {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('is_admin')
+          .eq('user_id', user.id)
+          .single();
+
+        setIsAdmin(profile?.is_admin || false);
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdminStatus();
+  }, [user]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -79,6 +105,14 @@ const Header = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
+                      {isAdmin && (
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin">
+                            <Shield className="h-4 w-4 mr-2" />
+                            Administração
+                          </Link>
+                        </DropdownMenuItem>
+                      )}
                       <DropdownMenuItem onClick={signOut}>
                         <LogOut className="h-4 w-4 mr-2" />
                         Sair
@@ -146,14 +180,24 @@ const Header = () => {
                 {!loading && (
                   <>
                     {user ? (
-                      <Button 
-                        variant="ghost" 
-                        className="w-full justify-start" 
-                        onClick={signOut}
-                      >
-                        <LogOut className="h-4 w-4 mr-2" />
-                        Sair
-                      </Button>
+                      <>
+                        {isAdmin && (
+                          <Button variant="ghost" className="w-full justify-start" asChild>
+                            <Link to="/admin">
+                              <Shield className="h-4 w-4 mr-2" />
+                              Administração
+                            </Link>
+                          </Button>
+                        )}
+                        <Button 
+                          variant="ghost" 
+                          className="w-full justify-start" 
+                          onClick={signOut}
+                        >
+                          <LogOut className="h-4 w-4 mr-2" />
+                          Sair
+                        </Button>
+                      </>
                     ) : (
                       <>
                         <Button variant="ghost" className="w-full justify-start" asChild>
