@@ -3,31 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff, Mail, Lock, User, BookOpen } from "lucide-react";
-
-const signInSchema = z.object({
-  email: z.string().email("Email inválido"),
-  password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
-});
-
-const signUpSchema = z.object({
-  email: z.string().email("Email inválido"),
-  password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
-  confirmPassword: z.string(),
-  fullName: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Senhas não coincidem",
-  path: ["confirmPassword"],
-});
-
-type SignInForm = z.infer<typeof signInSchema>;
-type SignUpForm = z.infer<typeof signUpSchema>;
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -36,27 +15,19 @@ export default function Auth() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Debug log to check initial loading state
-  console.log("Auth component - isLoading:", isLoading, "isSignUp:", isSignUp);
-
-  const signInForm = useForm<SignInForm>({
-    resolver: zodResolver(signInSchema),
-    mode: "onChange",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+  // Form state
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    fullName: "",
   });
 
-  const signUpForm = useForm<SignUpForm>({
-    resolver: zodResolver(signUpSchema),
-    mode: "onChange",
-    defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-      fullName: "",
-    },
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    fullName: "",
   });
 
   useEffect(() => {
@@ -70,25 +41,68 @@ export default function Auth() {
     checkUser();
   }, [navigate]);
 
-  const cleanupAuthState = () => {
-    Object.keys(localStorage).forEach((key) => {
-      if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
-        localStorage.removeItem(key);
-      }
-    });
-    Object.keys(sessionStorage || {}).forEach((key) => {
-      if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
-        sessionStorage.removeItem(key);
-      }
-    });
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field as keyof typeof errors]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
   };
 
-  const handleSignIn = async (data: SignInForm) => {
+  const validateForm = () => {
+    const newErrors = { email: "", password: "", confirmPassword: "", fullName: "" };
+    let isValid = true;
+
+    // Email validation
+    if (!formData.email) {
+      newErrors.email = "Email é obrigatório";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email inválido";
+      isValid = false;
+    }
+
+    // Password validation
+    if (!formData.password) {
+      newErrors.password = "Senha é obrigatória";
+      isValid = false;
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Senha deve ter pelo menos 6 caracteres";
+      isValid = false;
+    }
+
+    // Sign up specific validations
+    if (isSignUp) {
+      if (!formData.fullName) {
+        newErrors.fullName = "Nome é obrigatório";
+        isValid = false;
+      } else if (formData.fullName.length < 2) {
+        newErrors.fullName = "Nome deve ter pelo menos 2 caracteres";
+        isValid = false;
+      }
+
+      if (!formData.confirmPassword) {
+        newErrors.confirmPassword = "Confirme a senha";
+        isValid = false;
+      } else if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = "Senhas não coincidem";
+        isValid = false;
+      }
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
     setIsLoading(true);
     try {
       const { data: authData, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
+        email: formData.email,
+        password: formData.password,
       });
 
       if (error) {
@@ -126,18 +140,21 @@ export default function Auth() {
     }
   };
 
-  const handleSignUp = async (data: SignUpForm) => {
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
     setIsLoading(true);
     try {
       const redirectUrl = `${window.location.origin}/`;
 
       const { data: authData, error } = await supabase.auth.signUp({
-        email: data.email,
-        password: data.password,
+        email: formData.email,
+        password: formData.password,
         options: {
           emailRedirectTo: redirectUrl,
           data: {
-            full_name: data.fullName,
+            full_name: formData.fullName,
           }
         }
       });
@@ -167,7 +184,7 @@ export default function Auth() {
         
         // Switch to sign in mode after successful registration
         setIsSignUp(false);
-        signUpForm.reset();
+        setFormData({ email: "", password: "", confirmPassword: "", fullName: "" });
       }
     } catch (error: any) {
       toast({
@@ -178,6 +195,11 @@ export default function Auth() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const resetForm = () => {
+    setFormData({ email: "", password: "", confirmPassword: "", fullName: "" });
+    setErrors({ email: "", password: "", confirmPassword: "", fullName: "" });
   };
 
   return (
@@ -205,186 +227,110 @@ export default function Auth() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {isSignUp ? (
-              <Form {...signUpForm}>
-                <form onSubmit={signUpForm.handleSubmit(handleSignUp)} className="space-y-4">
-                  <FormField
-                    control={signUpForm.control}
-                    name="fullName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nome Completo</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input
-                              {...field}
-                              type="text"
-                              placeholder="Seu nome completo"
-                              className="pl-10"
-                              disabled={isLoading}
-                              autoComplete="name"
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+            <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-4">
+              {isSignUp && (
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Nome Completo</Label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="fullName"
+                      type="text"
+                      placeholder="Seu nome completo"
+                      className="pl-10"
+                      value={formData.fullName}
+                      onChange={(e) => handleInputChange("fullName", e.target.value)}
+                      disabled={isLoading}
+                      autoComplete="name"
+                    />
+                  </div>
+                  {errors.fullName && (
+                    <p className="text-sm font-medium text-destructive">{errors.fullName}</p>
+                  )}
+                </div>
+              )}
 
-                  <FormField
-                    control={signUpForm.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input
-                              {...field}
-                              type="email"
-                              placeholder="seu@email.com"
-                              className="pl-10"
-                              disabled={isLoading}
-                              autoComplete="email"
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="seu@email.com"
+                    className="pl-10"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    disabled={isLoading}
+                    autoComplete="email"
                   />
+                </div>
+                {errors.email && (
+                  <p className="text-sm font-medium text-destructive">{errors.email}</p>
+                )}
+              </div>
 
-                  <FormField
-                    control={signUpForm.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input
-                              {...field}
-                              type={showPassword ? "text" : "password"}
-                              placeholder="Sua senha"
-                              className="pl-10 pr-10"
-                              disabled={isLoading}
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowPassword(!showPassword)}
-                              className="absolute right-3 top-1/2 transform -translate-y-1/2"
-                            >
-                              {showPassword ? (
-                                <EyeOff className="h-4 w-4 text-muted-foreground" />
-                              ) : (
-                                <Eye className="h-4 w-4 text-muted-foreground" />
-                              )}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+              <div className="space-y-2">
+                <Label htmlFor="password">Senha</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Sua senha"
+                    className="pl-10 pr-10"
+                    value={formData.password}
+                    onChange={(e) => handleInputChange("password", e.target.value)}
+                    disabled={isLoading}
+                    autoComplete={isSignUp ? "new-password" : "current-password"}
                   />
-
-                  <FormField
-                    control={signUpForm.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Confirmar Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input
-                              {...field}
-                              type={showPassword ? "text" : "password"}
-                              placeholder="Confirme sua senha"
-                              className="pl-10"
-                              disabled={isLoading}
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                    disabled={isLoading}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-muted-foreground" />
                     )}
-                  />
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-sm font-medium text-destructive">{errors.password}</p>
+                )}
+              </div>
 
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Criando conta..." : "Criar Conta"}
-                  </Button>
-                </form>
-              </Form>
-            ) : (
-              <Form {...signInForm}>
-                <form onSubmit={signInForm.handleSubmit(handleSignIn)} className="space-y-4">
-                  <FormField
-                    control={signInForm.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input
-                              {...field}
-                              type="email"
-                              placeholder="seu@email.com"
-                              className="pl-10"
-                              disabled={isLoading}
-                              autoComplete="email"
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+              {isSignUp && (
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirmar Senha</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="confirmPassword"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Confirme sua senha"
+                      className="pl-10"
+                      value={formData.confirmPassword}
+                      onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                      disabled={isLoading}
+                      autoComplete="new-password"
+                    />
+                  </div>
+                  {errors.confirmPassword && (
+                    <p className="text-sm font-medium text-destructive">{errors.confirmPassword}</p>
+                  )}
+                </div>
+              )}
 
-                  <FormField
-                    control={signInForm.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input
-                              {...field}
-                              type={showPassword ? "text" : "password"}
-                              placeholder="Sua senha"
-                              className="pl-10 pr-10"
-                              disabled={isLoading}
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowPassword(!showPassword)}
-                              className="absolute right-3 top-1/2 transform -translate-y-1/2"
-                            >
-                              {showPassword ? (
-                                <EyeOff className="h-4 w-4 text-muted-foreground" />
-                              ) : (
-                                <Eye className="h-4 w-4 text-muted-foreground" />
-                              )}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Entrando..." : "Entrar"}
-                  </Button>
-                </form>
-              </Form>
-            )}
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading 
+                  ? (isSignUp ? "Criando conta..." : "Entrando...") 
+                  : (isSignUp ? "Criar Conta" : "Entrar")
+                }
+              </Button>
+            </form>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground">
@@ -392,11 +338,11 @@ export default function Auth() {
                 <button
                   onClick={() => {
                     setIsSignUp(!isSignUp);
-                    signInForm.reset();
-                    signUpForm.reset();
+                    resetForm();
                   }}
                   className="text-primary hover:underline font-medium"
                   disabled={isLoading}
+                  type="button"
                 >
                   {isSignUp ? "Entrar" : "Criar conta"}
                 </button>
