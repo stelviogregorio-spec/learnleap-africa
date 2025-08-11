@@ -36,6 +36,9 @@ export default function Auth() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Debug log to check initial loading state
+  console.log("Auth component - isLoading:", isLoading, "isSignUp:", isSignUp);
+
   const signInForm = useForm<SignInForm>({
     resolver: zodResolver(signInSchema),
     mode: "onChange",
