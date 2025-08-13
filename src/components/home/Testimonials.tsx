@@ -5,27 +5,27 @@ const Testimonials = () => {
     {
       id: 1,
       name: "Luan Aires",
-      role: "Digital Entrepreneur",
+      role: "Empreendedor Digital",
       company: "TechStart Angola",
-      content: "EduFlow transformed my business approach. The digital marketing course helped me scale my startup from 0 to 100K+ revenue in just 8 months. The instructors are world-class!",
+      content: "O EduFlow transformou a minha abordagem de negócios. O curso de marketing digital ajudou-me a escalar a minha startup de 0 para mais de 100 mil em receita em apenas 8 meses. Os instrutores são de classe mundial!",
       rating: 5,
       avatar: "LA",
     },
     {
       id: 2,
       name: "Patricia Moreira",
-      role: "Software Developer",
+      role: "Programadora",
       company: "InnovTech Mozambique",
-      content: "The web development bootcamp was incredibly comprehensive. I went from zero coding knowledge to landing my dream job as a full-stack developer. Worth every penny!",
+      content: "O bootcamp de desenvolvimento web foi incrivelmente abrangente. Passei de zero conhecimento de programação para conseguir o meu emprego dos sonhos como programadora full-stack. Valeu cada cêntimo!",
       rating: 5,
       avatar: "PM",
     },
     {
       id: 3,
       name: "Miguel Santos",
-      role: "Creative Director",
+      role: "Diretor Criativo",
       company: "Design Studio Cabo Verde",
-      content: "Amazing platform with high-quality content. The photography course elevated my skills tremendously. Now I'm running my own creative agency with confidence.",
+      content: "Plataforma incrível com conteúdo de alta qualidade. O curso de fotografia elevou tremendamente as minhas competências. Agora dirijo a minha própria agência criativa com confiança.",
       rating: 5,
       avatar: "MS",
     },
@@ -37,10 +37,10 @@ const Testimonials = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Success Stories from Our Students
+            Histórias de Sucesso dos Nossos Estudantes
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Join thousands of students who have transformed their careers and achieved their goals through our courses.
+            Junte-se a milhares de estudantes que transformaram as suas carreiras e alcançaram os seus objetivos através dos nossos cursos.
           </p>
         </div>
 

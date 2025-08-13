@@ -16,11 +16,11 @@ const Footer = () => {
               </div>
               <div>
                 <h3 className="text-lg font-bold">EduFlow</h3>
-                <p className="text-xs text-primary-foreground/80">Learn, Grow, Succeed</p>
+                <p className="text-xs text-primary-foreground/80">Aprender, Crescer, Vencer</p>
               </div>
             </div>
             <p className="text-sm text-primary-foreground/80 max-w-sm">
-              Empowering creators, entrepreneurs, and students across Portuguese-speaking African countries with world-class digital education.
+              Capacitando criadores, empreendedores e estudantes de países africanos de língua portuguesa com educação digital de classe mundial.
             </p>
             <div className="flex space-x-3">
               <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-white/10">
@@ -40,41 +40,41 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">Quick Links</h4>
+            <h4 className="text-lg font-semibold">Links Rápidos</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/courses" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Browse Courses</a></li>
-              <li><a href="/become-instructor" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Become Instructor</a></li>
-              <li><a href="/student-dashboard" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Student Dashboard</a></li>
-              <li><a href="/instructor-dashboard" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Instructor Dashboard</a></li>
-              <li><a href="/certificates" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Certificates</a></li>
+              <li><a href="/courses" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Explorar Cursos</a></li>
+              <li><a href="/become-instructor" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Tornar-se Instrutor</a></li>
+              <li><a href="/student-dashboard" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Painel do Estudante</a></li>
+              <li><a href="/instructor-dashboard" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Painel do Instrutor</a></li>
+              <li><a href="/certificates" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Certificados</a></li>
             </ul>
           </div>
 
           {/* Support */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">Support</h4>
+            <h4 className="text-lg font-semibold">Suporte</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/help" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Help Center</a></li>
-              <li><a href="/contact" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Contact Us</a></li>
-              <li><a href="/faq" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">FAQ</a></li>
-              <li><a href="/privacy" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Privacy Policy</a></li>
-              <li><a href="/terms" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Terms of Service</a></li>
+              <li><a href="/help" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Centro de Ajuda</a></li>
+              <li><a href="/contact" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Contactar-nos</a></li>
+              <li><a href="/faq" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Perguntas Frequentes</a></li>
+              <li><a href="/privacy" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Política de Privacidade</a></li>
+              <li><a href="/terms" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">Termos de Serviço</a></li>
             </ul>
           </div>
 
           {/* Newsletter */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">Stay Updated</h4>
+            <h4 className="text-lg font-semibold">Mantenha-se Atualizado</h4>
             <p className="text-sm text-primary-foreground/80">
-              Get the latest courses, tips, and updates delivered to your inbox.
+              Receba os últimos cursos, dicas e atualizações na sua caixa de entrada.
             </p>
             <div className="space-y-2">
               <Input
-                placeholder="Enter your email"
+                placeholder="Digite o seu email"
                 className="bg-white/10 border-white/20 text-primary-foreground placeholder:text-primary-foreground/60"
               />
               <Button className="w-full bg-white text-primary hover:bg-white/90">
-                Subscribe
+                Subscrever
               </Button>
             </div>
           </div>
@@ -101,10 +101,10 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 py-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-primary-foreground/60">
-            © 2024 EduFlow. All rights reserved.
+            © 2024 EduFlow. Todos os direitos reservados.
           </p>
           <div className="flex items-center space-x-4 text-sm text-primary-foreground/60">
-            <span>Available in:</span>
+            <span>Disponível em:</span>
             <button className="hover:text-primary-foreground transition-colors">English</button>
             <span>|</span>
             <button className="hover:text-primary-foreground transition-colors">Português</button>

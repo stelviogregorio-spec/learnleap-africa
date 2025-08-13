@@ -5,23 +5,23 @@ const BecomeInstructor = () => {
   const benefits = [
     {
       icon: Users,
-      title: "Reach Global Students",
-      description: "Connect with learners from Portuguese-speaking African countries and beyond.",
+      title: "Alcance Estudantes Globais",
+      description: "Conecte-se com estudantes de países africanos de língua portuguesa e não só.",
     },
     {
       icon: DollarSign,
-      title: "Earn Revenue",
-      description: "Get paid for sharing your expertise with competitive revenue sharing.",
+      title: "Ganhe Receita",
+      description: "Seja pago por partilhar a sua experiência com partilha de receita competitiva.",
     },
     {
       icon: BookOpen,
-      title: "Easy Course Creation",
-      description: "User-friendly tools to create engaging video courses, quizzes, and materials.",
+      title: "Criação Fácil de Cursos",
+      description: "Ferramentas fáceis de usar para criar cursos em vídeo envolventes, questionários e materiais.",
     },
     {
       icon: TrendingUp,
-      title: "Grow Your Brand",
-      description: "Build your reputation as an expert and expand your professional network.",
+      title: "Faça Crescer a Sua Marca",
+      description: "Construa a sua reputação como especialista e expanda a sua rede profissional.",
     },
   ];
 
@@ -32,11 +32,11 @@ const BecomeInstructor = () => {
           {/* Content */}
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Become an Instructor and Inspire Millions
+              Torne-se Instrutor e Inspire Milhões
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              Share your knowledge and expertise with students worldwide. Join our community of 
-              expert instructors and start building your online teaching business today.
+              Partilhe o seu conhecimento e experiência com estudantes de todo o mundo. Junte-se à nossa comunidade de 
+              instrutores especialistas e comece a construir o seu negócio de ensino online hoje.
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
@@ -55,10 +55,10 @@ const BecomeInstructor = () => {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
-                Start Teaching Today
+                Comece a Ensinar Hoje
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                Learn More
+                Saber Mais
               </Button>
             </div>
           </div>
@@ -66,31 +66,31 @@ const BecomeInstructor = () => {
           {/* Stats/Visual */}
           <div className="relative">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-6 text-center">Instructor Success Stats</h3>
+              <h3 className="text-2xl font-bold mb-6 text-center">Estatísticas de Sucesso dos Instrutores</h3>
               
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
                   <div className="text-3xl font-bold">₹50K+</div>
-                  <div className="text-blue-200 text-sm">Avg. Monthly Earnings</div>
+                  <div className="text-blue-200 text-sm">Ganhos Mensais Médios</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold">1M+</div>
-                  <div className="text-blue-200 text-sm">Students Reached</div>
+                  <div className="text-blue-200 text-sm">Estudantes Alcançados</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold">4.8★</div>
-                  <div className="text-blue-200 text-sm">Avg. Course Rating</div>
+                  <div className="text-blue-200 text-sm">Avaliação Média dos Cursos</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold">24/7</div>
-                  <div className="text-blue-200 text-sm">Support Available</div>
+                  <div className="text-blue-200 text-sm">Suporte Disponível</div>
                 </div>
               </div>
               
               <div className="mt-6 p-4 bg-white/5 rounded-lg text-center">
                 <p className="text-sm text-blue-100">
-                  "Teaching on EduFlow changed my life. I now earn more from my courses than my day job!" 
-                  <span className="block font-semibold mt-1">- Sarah M., Top Instructor</span>
+                  "Ensinar no EduFlow mudou a minha vida. Agora ganho mais com os meus cursos do que no meu emprego!" 
+                  <span className="block font-semibold mt-1">- Sarah M., Instrutora de Topo</span>
                 </p>
               </div>
             </div>

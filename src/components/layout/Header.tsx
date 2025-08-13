@@ -53,7 +53,7 @@ const Header = () => {
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-foreground">EduFlow</h1>
-              <p className="text-xs text-muted-foreground">Learn, Grow, Succeed</p>
+              <p className="text-xs text-muted-foreground">Aprender, Crescer, Vencer</p>
             </div>
           </Link>
 
@@ -62,7 +62,7 @@ const Header = () => {
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Search courses..."
+                placeholder="Pesquisar cursos..."
                 className="pl-10 bg-secondary/50 border-0 focus:bg-background transition-colors"
               />
             </div>
@@ -71,16 +71,16 @@ const Header = () => {
           {/* Navigation - Desktop */}
           <nav className="hidden lg:flex items-center space-x-6">
             <a href="/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Home
+              Início
             </a>
             <a href="/courses" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Courses
+              Cursos
             </a>
             <a href="/become-instructor" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Teach
+              Ensinar
             </a>
             <a href="/about" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              About
+              Sobre
             </a>
           </nav>
 
@@ -153,29 +153,29 @@ const Header = () => {
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
-                    placeholder="Search courses..."
+                    placeholder="Pesquisar cursos..."
                     className="pl-10 bg-secondary/50 border-0"
                   />
                 </div>
               </div>
               
               <a href="/" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-secondary/50 rounded-md">
-                Home
+                Início
               </a>
               <a href="/courses" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-secondary/50 rounded-md">
-                Courses
+                Cursos
               </a>
               <a href="/become-instructor" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-secondary/50 rounded-md">
-                Teach
+                Ensinar
               </a>
               <a href="/about" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-secondary/50 rounded-md">
-                About
+                Sobre
               </a>
               
               <div className="px-3 py-2 space-y-2">
                 <Button variant="ghost" className="w-full justify-start">
                   <ShoppingCart className="h-4 w-4 mr-2" />
-                  Cart
+                  Carrinho
                 </Button>
                 {!loading && (
                   <>

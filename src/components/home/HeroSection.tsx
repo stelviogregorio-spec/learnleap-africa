@@ -15,27 +15,27 @@ const HeroSection = () => {
           <div className="text-white animate-fade-in">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 text-sm font-medium mb-6">
               <Star className="w-4 h-4 mr-1 text-yellow-400" />
-              Trusted by 50,000+ students
+              Confiança de mais de 50.000 estudantes
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              Transform Your Future with
+              Transforme o Seu Futuro com
               <span className="block text-transparent bg-gradient-to-r from-white to-blue-200 bg-clip-text">
-                Expert-Led Courses
+                Cursos de Especialistas
               </span>
             </h1>
             
             <p className="text-xl text-blue-100 mb-8 max-w-lg">
-              Join thousands of creators, entrepreneurs, and students mastering new skills through our comprehensive digital courses. Learn from industry experts and grow your career.
+              Junte-se a milhares de criadores, empreendedores e estudantes que dominam novas competências através dos nossos cursos digitais abrangentes. Aprenda com especialistas da indústria e faça crescer a sua carreira.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <Button size="lg" className="bg-white text-primary hover:bg-gray-100 shadow-hero">
                 <Play className="w-5 h-5 mr-2" />
-                Start Learning Today
+                Comece a Aprender Hoje
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                Browse Courses
+                Explorar Cursos
               </Button>
             </div>
             
@@ -43,15 +43,15 @@ const HeroSection = () => {
             <div className="grid grid-cols-3 gap-6">
               <div className="text-center sm:text-left">
                 <div className="text-2xl font-bold">500+</div>
-                <div className="text-blue-200 text-sm">Expert Courses</div>
+                <div className="text-blue-200 text-sm">Cursos Especializados</div>
               </div>
               <div className="text-center sm:text-left">
                 <div className="text-2xl font-bold">50K+</div>
-                <div className="text-blue-200 text-sm">Active Students</div>
+                <div className="text-blue-200 text-sm">Estudantes Ativos</div>
               </div>
               <div className="text-center sm:text-left">
                 <div className="text-2xl font-bold">95%</div>
-                <div className="text-blue-200 text-sm">Success Rate</div>
+                <div className="text-blue-200 text-sm">Taxa de Sucesso</div>
               </div>
             </div>
           </div>
@@ -64,8 +64,8 @@ const HeroSection = () => {
                   <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-white/10 flex items-center justify-center">
                     <Play className="w-8 h-8" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">Watch Success Stories</h3>
-                  <p className="text-blue-200">See how our students transformed their careers</p>
+                  <h3 className="text-lg font-semibold mb-2">Assista Histórias de Sucesso</h3>
+                  <p className="text-blue-200">Veja como os nossos estudantes transformaram as suas carreiras</p>
                 </div>
               </div>
               
@@ -77,7 +77,7 @@ const HeroSection = () => {
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-gray-900">2,847</div>
-                    <div className="text-xs text-gray-500">Students Enrolled</div>
+                    <div className="text-xs text-gray-500">Estudantes Inscritos</div>
                   </div>
                 </div>
               </div>
@@ -89,7 +89,7 @@ const HeroSection = () => {
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-gray-900">4.9/5</div>
-                    <div className="text-xs text-gray-500">Course Rating</div>
+                    <div className="text-xs text-gray-500">Avaliação do Curso</div>
                   </div>
                 </div>
               </div>

@@ -42,7 +42,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
         {/* Badges */}
         <div className="absolute top-3 left-3 flex gap-2">
           {course.isBestseller && (
-            <Badge className="bg-warning text-warning-foreground">Bestseller</Badge>
+            <Badge className="bg-warning text-warning-foreground">Mais Vendido</Badge>
           )}
           <Badge variant="secondary">{course.level}</Badge>
         </div>
@@ -51,7 +51,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
           <Button size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <Play className="w-4 h-4 mr-1" />
-            Preview
+            Pré-visualizar
           </Button>
         </div>
       </div>
@@ -67,7 +67,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
         </h3>
         
         {/* Instructor */}
-        <p className="text-sm text-muted-foreground">by {course.instructor}</p>
+        <p className="text-sm text-muted-foreground">por {course.instructor}</p>
         
         {/* Rating */}
         <div className="flex items-center space-x-2">
@@ -86,7 +86,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
           </div>
           <div className="flex items-center">
             <Users className="w-3 h-3 mr-1" />
-            {course.studentCount.toLocaleString()} students
+            {course.studentCount.toLocaleString()} estudantes
           </div>
         </div>
         
@@ -103,7 +103,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
             )}
           </div>
           <Button size="sm" className="bg-gradient-button shadow-button">
-            Enroll Now
+            Inscrever Agora
           </Button>
         </div>
       </div>

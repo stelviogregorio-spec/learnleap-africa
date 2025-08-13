@@ -4,43 +4,43 @@ const FAQ = () => {
   const faqs = [
     {
       id: "1",
-      question: "How do I enroll in a course?",
-      answer: "Simply browse our course catalog, select the course you want, and click 'Enroll Now'. You can pay using PayPal, Stripe, or Multicaixa Express. Once payment is confirmed, you'll have immediate access to all course materials."
+      question: "Como me inscrevo num curso?",
+      answer: "Simplesmente navegue no nosso catálogo de cursos, selecione o curso que deseja e clique em 'Inscrever Agora'. Pode pagar usando PayPal, Stripe ou Multicaixa Express. Assim que o pagamento for confirmado, terá acesso imediato a todos os materiais do curso."
     },
     {
       id: "2",
-      question: "Can I access courses on mobile devices?",
-      answer: "Yes! EduFlow is fully responsive and works perfectly on smartphones, tablets, and desktops. You can learn anywhere, anytime, and your progress is automatically synced across all devices."
+      question: "Posso aceder aos cursos em dispositivos móveis?",
+      answer: "Sim! O EduFlow é totalmente responsivo e funciona perfeitamente em smartphones, tablets e computadores. Pode aprender em qualquer lugar, a qualquer hora, e o seu progresso é automaticamente sincronizado em todos os dispositivos."
     },
     {
       id: "3",
-      question: "Do I receive a certificate upon completion?",
-      answer: "Absolutely! Upon completing a course and passing all assessments, you'll receive a verified digital certificate that you can share on LinkedIn, add to your resume, or download as a PDF."
+      question: "Recebo um certificado após a conclusão?",
+      answer: "Absolutamente! Ao completar um curso e passar em todas as avaliações, receberá um certificado digital verificado que pode partilhar no LinkedIn, adicionar ao seu currículo ou descarregar como PDF."
     },
     {
       id: "4",
-      question: "What payment methods do you accept?",
-      answer: "We accept multiple payment methods including PayPal, Stripe (credit/debit cards), and Multicaixa Express for our students in Portuguese-speaking African countries. All transactions are secure and encrypted."
+      question: "Que métodos de pagamento aceitam?",
+      answer: "Aceitamos múltiplos métodos de pagamento incluindo PayPal, Stripe (cartões de crédito/débito) e Multicaixa Express para os nossos estudantes em países africanos de língua portuguesa. Todas as transações são seguras e encriptadas."
     },
     {
       id: "5",
-      question: "How do I become an instructor?",
-      answer: "Click on 'Become an Instructor', fill out our application form, and submit a sample lesson. Our team will review your application and guide you through the onboarding process. We provide full support to help you create amazing courses."
+      question: "Como me torno instrutor?",
+      answer: "Clique em 'Tornar-se Instrutor', preencha o nosso formulário de candidatura e submeta uma aula de exemplo. A nossa equipa irá rever a sua candidatura e orientá-lo através do processo de integração. Fornecemos apoio completo para o ajudar a criar cursos incríveis."
     },
     {
       id: "6",
-      question: "Is there a money-back guarantee?",
-      answer: "Yes! We offer a 30-day money-back guarantee. If you're not satisfied with a course, you can request a full refund within 30 days of purchase, no questions asked."
+      question: "Há garantia de devolução do dinheiro?",
+      answer: "Sim! Oferecemos uma garantia de devolução do dinheiro de 30 dias. Se não estiver satisfeito com um curso, pode solicitar um reembolso total dentro de 30 dias da compra, sem perguntas."
     },
     {
       id: "7",
-      question: "Can I download course materials?",
-      answer: "Yes, most course materials including PDFs, slides, and additional resources are downloadable. Video content is available for offline viewing through our mobile app."
+      question: "Posso descarregar os materiais do curso?",
+      answer: "Sim, a maioria dos materiais do curso incluindo PDFs, slides e recursos adicionais são descarregáveis. O conteúdo em vídeo está disponível para visualização offline através da nossa aplicação móvel."
     },
     {
       id: "8",
-      question: "Do you offer courses in Portuguese?",
-      answer: "Yes! We have courses available in both English and Portuguese. You can filter courses by language and our platform interface is available in both languages to serve our African community better."
+      question: "Oferecem cursos em português?",
+      answer: "Sim! Temos cursos disponíveis tanto em inglês como em português. Pode filtrar cursos por idioma e a nossa interface da plataforma está disponível em ambos os idiomas para servir melhor a nossa comunidade africana."
     }
   ];
 
@@ -50,10 +50,10 @@ const FAQ = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Frequently Asked Questions
+            Perguntas Frequentes
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Find answers to common questions about our courses, platform, and services.
+            Encontre respostas para perguntas comuns sobre os nossos cursos, plataforma e serviços.
           </p>
         </div>
 
@@ -80,21 +80,21 @@ const FAQ = () => {
         {/* Additional Help */}
         <div className="text-center mt-12">
           <p className="text-muted-foreground mb-4">
-            Still have questions? We're here to help!
+            Ainda tem perguntas? Estamos aqui para ajudar!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="/contact" 
               className="text-primary hover:text-primary/80 font-medium transition-colors"
             >
-              Contact Support
+              Contactar Suporte
             </a>
             <span className="hidden sm:inline text-muted-foreground">|</span>
             <a 
               href="/help" 
               className="text-primary hover:text-primary/80 font-medium transition-colors"
             >
-              Help Center
+              Centro de Ajuda
             </a>
           </div>
         </div>
