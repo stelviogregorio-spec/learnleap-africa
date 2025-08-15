@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./useAuth";
@@ -19,21 +20,31 @@ export const useAdmin = () => {
   useEffect(() => {
     const checkAdminStatus = async () => {
       if (!user) {
+        console.log("🔍 useAdmin - Usuário não logado");
         setIsAdmin(false);
         setLoading(false);
         return;
       }
 
+      console.log("🔍 useAdmin - Verificando status admin para usuário:", user.email);
+
       try {
-        const { data: profile } = await supabase
+        const { data: profile, error } = await supabase
           .from('profiles')
           .select('is_admin')
           .eq('user_id', user.id)
           .single();
 
-        setIsAdmin(profile?.is_admin || false);
+        if (error) {
+          console.error('❌ useAdmin - Erro ao buscar perfil:', error);
+          setIsAdmin(false);
+        } else {
+          console.log("🔍 useAdmin - Dados do perfil:", profile);
+          console.log("🔍 useAdmin - is_admin:", profile?.is_admin);
+          setIsAdmin(profile?.is_admin || false);
+        }
       } catch (error) {
-        console.error('Error checking admin status:', error);
+        console.error('❌ useAdmin - Erro na verificação:', error);
         setIsAdmin(false);
       } finally {
         setLoading(false);
@@ -42,6 +53,9 @@ export const useAdmin = () => {
 
     checkAdminStatus();
   }, [user]);
+
+  // Debug log final
+  console.log("🔍 useAdmin - Estado final:", { isAdmin, loading, userEmail: user?.email });
 
   const getAdminStats = async (): Promise<AdminStats> => {
     const [

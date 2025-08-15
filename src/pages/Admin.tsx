@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -36,6 +37,13 @@ export default function Admin() {
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [statsLoading, setStatsLoading] = useState(true);
 
+  // Debug logs temporários
+  console.log("🔍 Admin page - Estado atual:", {
+    isAdmin,
+    loading,
+    location: window.location.href
+  });
+
   useEffect(() => {
     const loadStats = async () => {
       if (!isAdmin) return;
@@ -54,6 +62,7 @@ export default function Admin() {
   }, [isAdmin, getAdminStats]);
 
   if (loading) {
+    console.log("⏳ Admin page - Ainda carregando autenticação...");
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
@@ -62,8 +71,11 @@ export default function Admin() {
   }
 
   if (!isAdmin) {
+    console.log("❌ Admin page - Usuário não é admin, redirecionando para home");
     return <Navigate to="/" replace />;
   }
+
+  console.log("✅ Admin page - Usuário é admin, renderizando dashboard");
 
   return (
     <SidebarProvider defaultOpen>
